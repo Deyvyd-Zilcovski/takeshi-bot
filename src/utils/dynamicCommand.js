@@ -16,6 +16,7 @@ import {
   isAdmin,
   isBotOwner,
   isLink,
+  isLinkInContext,
   verifyPrefix,
 } from "../middlewares/index.js";
 import { badMacHandler } from "./badMacHandler.js";
@@ -51,7 +52,7 @@ export async function dynamicCommand(paramsHandler, startProcess) {
 
   const activeGroup = isActiveGroup(remoteJid);
 
-  if (activeGroup && isActiveAntiLinkGroup(remoteJid) && isLink(fullMessage)) {
+  if (activeGroup && isActiveAntiLinkGroup(remoteJid) && (isLink(fullMessage) || isLinkInContext(webMessage).length)) {
     if (!userLid) {
       return;
     }
