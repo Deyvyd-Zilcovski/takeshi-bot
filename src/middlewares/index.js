@@ -109,6 +109,22 @@ export function isLink(text) {
   });
 }
 
+export function isLinkInContext(webMessage) {
+  const links = [];
+
+  if (!webMessage || typeof webMessage !== "object") return links;
+
+  const ctx = webMessage?.message?.extendedTextMessage?.contextInfo;
+
+  const src = ctx?.externalAdReply?.sourceUrl;
+  if (src) links.push(src);
+
+  const thumb = ctx?.externalAdReply?.thumbnailUrl;
+  if (thumb) links.push(thumb);
+
+  return links;
+  }
+
 export async function isAdmin({ remoteJid, userLid, socket }) {
   const { participants, owner } = await socket.groupMetadata(remoteJid);
 
